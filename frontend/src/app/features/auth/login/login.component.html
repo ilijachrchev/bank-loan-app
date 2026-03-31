@@ -1,30 +1,81 @@
-<div class="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-12">
-  <div class="w-full max-w-md">
-    <!-- Logo -->
-    <div class="text-center mb-8">
-      <a routerLink="/" class="inline-flex items-center gap-2 no-underline">
-        <div class="w-12 h-12 bg-navy rounded-xl flex items-center justify-center shadow-lg">
-          <span class="text-gold font-bold text-2xl">B</span>
-        </div>
-        <span class="text-navy font-bold text-2xl">BankLoan <span class="text-gold-600">Pro</span></span>
+<div class="auth-container">
+
+  <!-- ── Left: Brand Panel ─────────────────────────────────────── -->
+  <div class="brand-panel">
+    <div class="brand-orb brand-orb-1"></div>
+    <div class="brand-orb brand-orb-2"></div>
+    <div class="brand-orb brand-orb-3"></div>
+
+    <div class="brand-content">
+      <a routerLink="/" class="brand-logo">
+        <div class="logo-icon"><span>V</span></div>
+        <span class="logo-text">VaultBank <span>Pro</span></span>
       </a>
-      <h1 class="text-2xl font-bold text-navy-900 mt-4">Welcome back</h1>
-      <p class="text-slate-500 mt-1">Sign in to your account</p>
+
+      <h1 class="brand-headline">Banking made<br>for the modern world.</h1>
+      <p class="brand-sub">
+        Apply for loans, track your applications in real time,
+        and manage your finances — all from one seamless platform.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon"><mat-icon>verified_user</mat-icon></div>
+          <span>Bank-grade 256-bit SSL encryption</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><mat-icon>speed</mat-icon></div>
+          <span>Instant decisions, fast disbursements</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><mat-icon>support_agent</mat-icon></div>
+          <span>Dedicated 24/7 support team</span>
+        </div>
+      </div>
+
+      <div class="brand-stats">
+        <div>
+          <span class="stat-value">$2.4B+</span>
+          <span class="stat-label">Disbursed</span>
+        </div>
+        <div>
+          <span class="stat-value">50K+</span>
+          <span class="stat-label">Customers</span>
+        </div>
+        <div>
+          <span class="stat-value">99.9%</span>
+          <span class="stat-label">Uptime</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right: Form Panel ─────────────────────────────────────── -->
+  <div class="form-panel">
+
+    <!-- Mobile logo -->
+    <div class="lg:hidden mb-10 text-center">
+      <a routerLink="/" class="inline-flex items-center gap-3 no-underline">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #F59E0B, #d97706)">
+          <span class="text-navy font-black text-xl">V</span>
+        </div>
+        <span class="text-navy font-bold text-2xl">VaultBank <span class="text-gold-600">Pro</span></span>
+      </a>
     </div>
 
-    <mat-card class="shadow-xl !rounded-2xl overflow-hidden">
-      <!-- Card header bar -->
-      <div class="h-2 bg-gradient-to-r from-navy via-navy-700 to-gold"></div>
+    <div class="form-card">
+      <div class="form-card-accent"></div>
+      <div class="form-card-body">
 
-      <mat-card-content class="!p-8">
-        <!-- Error Alert -->
-        <div *ngIf="errorMessage()" class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex items-start gap-3">
-          <mat-icon class="text-red-500 !text-lg flex-shrink-0 mt-0.5">error_outline</mat-icon>
-          <p class="text-red-700 text-sm">{{ errorMessage() }}</p>
+        <h2 class="form-title">Welcome back</h2>
+        <p class="form-subtitle">Sign in to continue to your account</p>
+
+        <div *ngIf="errorMessage()" class="error-alert">
+          <mat-icon>error_outline</mat-icon>
+          <p>{{ errorMessage() }}</p>
         </div>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-5">
-          <!-- Email -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-fields">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Email address</mat-label>
             <input matInput type="email" formControlName="email" placeholder="you@example.com" autocomplete="email">
@@ -33,7 +84,6 @@
             <mat-error *ngIf="form.get('email')?.hasError('email')">Enter a valid email address</mat-error>
           </mat-form-field>
 
-          <!-- Password -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Password</mat-label>
             <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" autocomplete="current-password">
@@ -44,18 +94,17 @@
             <mat-error *ngIf="form.get('password')?.hasError('minlength')">Minimum 6 characters</mat-error>
           </mat-form-field>
 
-          <!-- Submit -->
-          <button mat-raised-button type="submit" class="w-full !bg-navy !text-white !py-3 !rounded-xl !font-semibold !text-base !mt-2" [disabled]="loading()">
+          <button mat-raised-button type="submit" class="submit-btn" [disabled]="loading()">
             <span *ngIf="!loading()">Sign In</span>
             <mat-spinner *ngIf="loading()" diameter="22" class="inline-block mx-auto"></mat-spinner>
           </button>
         </form>
 
-        <p class="text-center text-slate-500 mt-6 text-sm">
+        <p class="form-footer-text">
           Don't have an account?
-          <a routerLink="/register" class="text-gold-600 font-semibold hover:text-gold-700 no-underline ml-1">Create account</a>
+          <a routerLink="/register">Create account</a>
         </p>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
   </div>
 </div>

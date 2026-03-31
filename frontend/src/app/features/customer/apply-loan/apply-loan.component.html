@@ -1,201 +1,230 @@
-<div class="page-enter max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="page-enter p-8 max-w-3xl mx-auto">
+
   <!-- Header -->
   <div class="mb-8">
-    <a routerLink="/customer/dashboard" class="inline-flex items-center gap-1 text-slate-500 hover:text-navy transition-colors text-sm mb-4 no-underline">
+    <a routerLink="/customer/dashboard"
+       class="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-800 transition-colors text-sm mb-5 no-underline font-medium">
       <mat-icon class="!text-base">arrow_back</mat-icon>
       Back to Dashboard
     </a>
-    <h1 class="text-2xl lg:text-3xl font-bold text-navy-900">Apply for a Loan</h1>
-    <p class="text-slate-500 mt-1">Complete the steps below to submit your application.</p>
+    <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Apply for a Loan</h1>
+    <p class="text-slate-500 mt-1 text-sm">Complete the steps below to submit your application.</p>
   </div>
 
-  <mat-card class="!rounded-2xl shadow-md border border-slate-100">
-    <mat-card-content class="!p-0">
-      <mat-stepper linear #stepper class="apply-stepper">
+  <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <mat-stepper linear #stepper class="apply-stepper">
 
-        <!-- Step 1: Loan Details -->
-        <mat-step [stepControl]="loanDetailsForm" label="Loan Details">
-          <div class="p-6 lg:p-8">
-            <h2 class="text-xl font-bold text-navy-900 mb-6">Loan Details</h2>
-            <form [formGroup]="loanDetailsForm" class="space-y-6">
-
-              <!-- Loan Type -->
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Loan Type</mat-label>
-                <mat-select formControlName="type">
-                  <mat-option *ngFor="let t of loanTypes" [value]="t">
-                    <span class="flex items-center gap-2">
-                      <ng-container [ngSwitch]="t">
-                        <span *ngSwitchCase="'Personal'">💰 Personal</span>
-                        <span *ngSwitchCase="'Home'">🏠 Home</span>
-                        <span *ngSwitchCase="'Car'">🚗 Car</span>
-                        <span *ngSwitchCase="'Business'">💼 Business</span>
-                        <span *ngSwitchCase="'Education'">🎓 Education</span>
-                      </ng-container>
-                    </span>
-                  </mat-option>
-                </mat-select>
-                <mat-error>Please select a loan type</mat-error>
-              </mat-form-field>
-
-              <!-- Amount -->
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Loan Amount</mat-label>
-                <span matPrefix class="text-slate-500 mr-1">$</span>
-                <input matInput type="number" formControlName="amount" placeholder="50000">
-                <mat-hint>Min: $1,000 — Max: $10,000,000</mat-hint>
-                <mat-error *ngIf="loanDetailsForm.get('amount')?.hasError('required')">Amount is required</mat-error>
-                <mat-error *ngIf="loanDetailsForm.get('amount')?.hasError('min')">Minimum $1,000</mat-error>
-                <mat-error *ngIf="loanDetailsForm.get('amount')?.hasError('max')">Maximum $10,000,000</mat-error>
-              </mat-form-field>
-
-              <!-- Purpose -->
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Loan Purpose</mat-label>
-                <textarea matInput formControlName="purpose" rows="3"
-                          placeholder="Describe the purpose of your loan (min. 20 characters)..."></textarea>
-                <mat-hint align="end">{{ loanDetailsForm.get('purpose')?.value?.length || 0 }} / 500</mat-hint>
-                <mat-error *ngIf="loanDetailsForm.get('purpose')?.hasError('required')">Purpose is required</mat-error>
-                <mat-error *ngIf="loanDetailsForm.get('purpose')?.hasError('minlength')">Minimum 20 characters</mat-error>
-              </mat-form-field>
-
-              <!-- Tenure Slider -->
-              <div>
-                <label class="text-sm font-medium text-slate-700 block mb-3">
-                  Loan Tenure: <span class="text-navy font-bold">{{ tenureLabel }}</span>
-                </label>
-                <mat-slider min="6" max="360" step="6" class="w-full !pb-0">
-                  <input matSliderThumb formControlName="tenure">
-                </mat-slider>
-                <div class="flex justify-between text-xs text-slate-400 mt-1">
-                  <span>6 months</span>
-                  <span>30 years</span>
-                </div>
-              </div>
-
-              <div class="flex justify-end pt-2">
-                <button mat-raised-button matStepperNext class="!bg-navy !text-white !rounded-xl !px-8">
-                  Next <mat-icon>arrow_forward</mat-icon>
-                </button>
-              </div>
-            </form>
+      <!-- Step 1: Loan Details -->
+      <mat-step [stepControl]="loanDetailsForm" label="Loan Details">
+        <div class="p-8">
+          <div class="flex items-center gap-3 mb-7">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+                 style="background: linear-gradient(135deg, #eff6ff, #dbeafe)">
+              <mat-icon style="color: #3b82f6; font-size: 18px; width: 18px; height: 18px">account_balance</mat-icon>
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Loan Details</h2>
+              <p class="text-xs text-slate-400">Choose your loan type and amount</p>
+            </div>
           </div>
-        </mat-step>
 
-        <!-- Step 2: Financial Info -->
-        <mat-step [stepControl]="financialInfoForm" label="Financial Info">
-          <div class="p-6 lg:p-8">
-            <h2 class="text-xl font-bold text-navy-900 mb-6">Financial Information</h2>
-            <form [formGroup]="financialInfoForm" class="space-y-6">
+          <form [formGroup]="loanDetailsForm" class="space-y-5">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Loan Type</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let t of loanTypes" [value]="t">
+                  <ng-container [ngSwitch]="t">
+                    <span *ngSwitchCase="'Personal'">💰 Personal Loan</span>
+                    <span *ngSwitchCase="'Home'">🏠 Home Loan</span>
+                    <span *ngSwitchCase="'Car'">🚗 Car Loan</span>
+                    <span *ngSwitchCase="'Business'">💼 Business Loan</span>
+                    <span *ngSwitchCase="'Education'">🎓 Education Loan</span>
+                  </ng-container>
+                </mat-option>
+              </mat-select>
+              <mat-error>Please select a loan type</mat-error>
+            </mat-form-field>
 
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Monthly Income</mat-label>
-                <span matPrefix class="text-slate-500 mr-1">$</span>
-                <input matInput type="number" formControlName="monthlyIncome" placeholder="5000">
-                <mat-hint>Your gross monthly income before taxes</mat-hint>
-                <mat-error *ngIf="financialInfoForm.get('monthlyIncome')?.hasError('required')">Monthly income is required</mat-error>
-                <mat-error *ngIf="financialInfoForm.get('monthlyIncome')?.hasError('min')">Must be at least $100</mat-error>
-              </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Loan Amount</mat-label>
+              <span matPrefix class="text-slate-400 mr-1 font-medium">$</span>
+              <input matInput type="number" formControlName="amount" placeholder="50,000">
+              <mat-hint>Min: $1,000 — Max: $10,000,000</mat-hint>
+              <mat-error *ngIf="loanDetailsForm.get('amount')?.hasError('required')">Amount is required</mat-error>
+              <mat-error *ngIf="loanDetailsForm.get('amount')?.hasError('min')">Minimum $1,000</mat-error>
+              <mat-error *ngIf="loanDetailsForm.get('amount')?.hasError('max')">Maximum $10,000,000</mat-error>
+            </mat-form-field>
 
-              <!-- Info box -->
-              <div class="bg-blue-50 border border-blue-200 rounded-xl p-5">
-                <h4 class="font-semibold text-blue-800 flex items-center gap-2 mb-3">
-                  <mat-icon class="!text-base">info</mat-icon>
-                  What we consider
-                </h4>
-                <ul class="text-blue-700 text-sm space-y-2">
-                  <li class="flex items-start gap-2">
-                    <mat-icon class="!text-sm mt-0.5 text-blue-500">check_circle</mat-icon>
-                    Employment stability and income source
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <mat-icon class="!text-sm mt-0.5 text-blue-500">check_circle</mat-icon>
-                    Debt-to-income ratio
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <mat-icon class="!text-sm mt-0.5 text-blue-500">check_circle</mat-icon>
-                    Credit history and financial behavior
-                  </li>
-                </ul>
-              </div>
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Loan Purpose</mat-label>
+              <textarea matInput formControlName="purpose" rows="3"
+                        placeholder="Describe the purpose of your loan (min. 20 characters)..."></textarea>
+              <mat-hint align="end">{{ loanDetailsForm.get('purpose')?.value?.length || 0 }} / 500</mat-hint>
+              <mat-error *ngIf="loanDetailsForm.get('purpose')?.hasError('required')">Purpose is required</mat-error>
+              <mat-error *ngIf="loanDetailsForm.get('purpose')?.hasError('minlength')">Minimum 20 characters</mat-error>
+            </mat-form-field>
 
-              <div class="flex justify-between pt-2">
-                <button mat-button matStepperPrevious class="!text-slate-600">
-                  <mat-icon>arrow_back</mat-icon> Back
-                </button>
-                <button mat-raised-button matStepperNext class="!bg-navy !text-white !rounded-xl !px-8">
-                  Next <mat-icon>arrow_forward</mat-icon>
-                </button>
-              </div>
-            </form>
-          </div>
-        </mat-step>
-
-        <!-- Step 3: Review & Submit -->
-        <mat-step label="Review & Submit">
-          <div class="p-6 lg:p-8">
-            <h2 class="text-xl font-bold text-navy-900 mb-6">Review Your Application</h2>
-
-            <!-- Summary Card -->
-            <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
-              <h3 class="font-semibold text-navy-800 text-sm uppercase tracking-wider border-b border-slate-200 pb-3">Loan Details</h3>
-
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <p class="text-xs text-slate-500 uppercase tracking-wide">Loan Type</p>
-                  <p class="font-semibold text-navy-900 mt-1">{{ loanDetailsForm.get('type')?.value }}</p>
-                </div>
-                <div>
-                  <p class="text-xs text-slate-500 uppercase tracking-wide">Amount</p>
-                  <p class="font-semibold text-navy-900 mt-1">{{ formatCurrency(loanDetailsForm.get('amount')?.value) }}</p>
-                </div>
-                <div>
-                  <p class="text-xs text-slate-500 uppercase tracking-wide">Tenure</p>
-                  <p class="font-semibold text-navy-900 mt-1">{{ tenureLabel }}</p>
-                </div>
-                <div>
-                  <p class="text-xs text-slate-500 uppercase tracking-wide">Est. Monthly EMI</p>
-                  <p class="font-bold text-gold-600 mt-1 text-lg">{{ emi }}</p>
-                </div>
-                <div class="col-span-2">
-                  <p class="text-xs text-slate-500 uppercase tracking-wide">Purpose</p>
-                  <p class="font-medium text-navy-900 mt-1 text-sm">{{ loanDetailsForm.get('purpose')?.value }}</p>
-                </div>
-              </div>
-
-              <mat-divider></mat-divider>
-
-              <h3 class="font-semibold text-navy-800 text-sm uppercase tracking-wider pt-1">Financial Information</h3>
-              <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide">Monthly Income</p>
-                <p class="font-semibold text-navy-900 mt-1">{{ formatCurrency(financialInfoForm.get('monthlyIncome')?.value) }}</p>
+            <div>
+              <label class="text-sm font-semibold text-slate-700 block mb-3">
+                Loan Tenure: <span class="text-blue-600">{{ tenureLabel }}</span>
+              </label>
+              <mat-slider min="6" max="360" step="6" class="w-full !pb-0">
+                <input matSliderThumb formControlName="tenure">
+              </mat-slider>
+              <div class="flex justify-between text-xs text-slate-400 mt-1">
+                <span>6 months</span>
+                <span>30 years</span>
               </div>
             </div>
 
-            <!-- Disclaimer -->
-            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
-              <p class="text-amber-800 text-sm">
-                <strong>Note:</strong> By submitting this application, you confirm that all information provided is accurate and complete.
-                Our team will review your application and respond within 24 hours.
-              </p>
+            <div class="flex justify-end pt-2">
+              <button mat-raised-button matStepperNext
+                      class="!rounded-xl !px-8 !font-semibold"
+                      style="background: #0F172A !important; color: white !important">
+                Next <mat-icon>arrow_forward</mat-icon>
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-step>
+
+      <!-- Step 2: Financial Info -->
+      <mat-step [stepControl]="financialInfoForm" label="Financial Info">
+        <div class="p-8">
+          <div class="flex items-center gap-3 mb-7">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+                 style="background: linear-gradient(135deg, #ecfdf5, #d1fae5)">
+              <mat-icon style="color: #10b981; font-size: 18px; width: 18px; height: 18px">trending_up</mat-icon>
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Financial Information</h2>
+              <p class="text-xs text-slate-400">Help us understand your financial profile</p>
+            </div>
+          </div>
+
+          <form [formGroup]="financialInfoForm" class="space-y-5">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Monthly Income</mat-label>
+              <span matPrefix class="text-slate-400 mr-1 font-medium">$</span>
+              <input matInput type="number" formControlName="monthlyIncome" placeholder="5,000">
+              <mat-hint>Your gross monthly income before taxes</mat-hint>
+              <mat-error *ngIf="financialInfoForm.get('monthlyIncome')?.hasError('required')">Monthly income is required</mat-error>
+              <mat-error *ngIf="financialInfoForm.get('monthlyIncome')?.hasError('min')">Must be at least $100</mat-error>
+            </mat-form-field>
+
+            <div class="rounded-xl p-5" style="background: #eff6ff; border: 1px solid #bfdbfe">
+              <h4 class="font-semibold flex items-center gap-2 mb-3 text-sm" style="color: #1e40af">
+                <mat-icon style="font-size: 16px; width: 16px; height: 16px">info</mat-icon>
+                What we consider
+              </h4>
+              <ul class="space-y-2">
+                <li class="flex items-center gap-2 text-sm" style="color: #1d4ed8">
+                  <mat-icon style="font-size: 14px; width: 14px; height: 14px; color: #3b82f6">check_circle</mat-icon>
+                  Employment stability and income source
+                </li>
+                <li class="flex items-center gap-2 text-sm" style="color: #1d4ed8">
+                  <mat-icon style="font-size: 14px; width: 14px; height: 14px; color: #3b82f6">check_circle</mat-icon>
+                  Debt-to-income ratio
+                </li>
+                <li class="flex items-center gap-2 text-sm" style="color: #1d4ed8">
+                  <mat-icon style="font-size: 14px; width: 14px; height: 14px; color: #3b82f6">check_circle</mat-icon>
+                  Credit history and financial behavior
+                </li>
+              </ul>
             </div>
 
-            <div class="flex justify-between">
-              <button mat-button matStepperPrevious class="!text-slate-600">
+            <div class="flex justify-between pt-2">
+              <button mat-button matStepperPrevious class="!text-slate-500 !rounded-xl">
                 <mat-icon>arrow_back</mat-icon> Back
               </button>
-              <button mat-raised-button class="!bg-gold !text-navy !font-bold !rounded-xl !px-8"
-                      (click)="onSubmit()" [disabled]="loading()">
-                <span *ngIf="!loading()">
-                  <mat-icon class="mr-1">send</mat-icon>Submit Application
-                </span>
-                <mat-spinner *ngIf="loading()" diameter="22" class="inline-block"></mat-spinner>
+              <button mat-raised-button matStepperNext
+                      class="!rounded-xl !px-8 !font-semibold"
+                      style="background: #0F172A !important; color: white !important">
+                Next <mat-icon>arrow_forward</mat-icon>
               </button>
             </div>
-          </div>
-        </mat-step>
+          </form>
+        </div>
+      </mat-step>
 
-      </mat-stepper>
-    </mat-card-content>
-  </mat-card>
+      <!-- Step 3: Review & Submit -->
+      <mat-step label="Review & Submit">
+        <div class="p-8">
+          <div class="flex items-center gap-3 mb-7">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+                 style="background: linear-gradient(135deg, #fffbeb, #fef3c7)">
+              <mat-icon style="color: #f59e0b; font-size: 18px; width: 18px; height: 18px">fact_check</mat-icon>
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Review Your Application</h2>
+              <p class="text-xs text-slate-400">Please verify your information before submitting</p>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div class="rounded-2xl p-6 space-y-5 mb-6" style="background: #f8fafc; border: 1px solid #e2e8f0">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Loan Details</p>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <p class="text-xs text-slate-400 mb-1">Loan Type</p>
+                  <p class="font-semibold text-slate-900 text-sm">{{ loanDetailsForm.get('type')?.value }}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400 mb-1">Amount</p>
+                  <p class="font-bold text-slate-900 text-sm">{{ formatCurrency(loanDetailsForm.get('amount')?.value) }}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400 mb-1">Tenure</p>
+                  <p class="font-semibold text-slate-900 text-sm">{{ tenureLabel }}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400 mb-1">Est. Monthly EMI</p>
+                  <p class="font-bold text-lg" style="color: #d97706">{{ emi }}</p>
+                </div>
+                <div class="col-span-2">
+                  <p class="text-xs text-slate-400 mb-1">Purpose</p>
+                  <p class="font-medium text-slate-800 text-sm leading-relaxed">{{ loanDetailsForm.get('purpose')?.value }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid #e2e8f0; padding-top: 20px">
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Financial Information</p>
+              <div>
+                <p class="text-xs text-slate-400 mb-1">Monthly Income</p>
+                <p class="font-semibold text-slate-900 text-sm">{{ formatCurrency(financialInfoForm.get('monthlyIncome')?.value) }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Disclaimer -->
+          <div class="rounded-xl p-4 mb-6 flex items-start gap-3"
+               style="background: #fffbeb; border: 1px solid #fde68a">
+            <mat-icon style="color: #d97706; font-size: 17px; width: 17px; height: 17px; flex-shrink: 0; margin-top: 1px">info</mat-icon>
+            <p class="text-sm leading-relaxed" style="color: #92400e">
+              <strong>Note:</strong> By submitting, you confirm all information is accurate and complete.
+              Our team will review your application and respond within 24 hours.
+            </p>
+          </div>
+
+          <div class="flex justify-between">
+            <button mat-button matStepperPrevious class="!text-slate-500 !rounded-xl">
+              <mat-icon>arrow_back</mat-icon> Back
+            </button>
+            <button mat-raised-button
+                    class="!rounded-xl !px-8 !font-bold"
+                    style="background: linear-gradient(135deg, #F59E0B, #d97706) !important; color: #0F172A !important; box-shadow: 0 4px 16px rgba(245,158,11,0.35) !important"
+                    (click)="onSubmit()" [disabled]="loading()">
+              <span *ngIf="!loading()">
+                <mat-icon class="mr-1">send</mat-icon>Submit Application
+              </span>
+              <mat-spinner *ngIf="loading()" diameter="22" class="inline-block"></mat-spinner>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+    </mat-stepper>
+  </div>
 </div>

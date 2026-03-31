@@ -1,167 +1,167 @@
-<div class="page-enter max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <!-- Welcome Banner -->
-  <div class="bg-gradient-to-r from-navy to-navy-700 rounded-2xl p-8 mb-8 relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10">
-      <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-gold blur-3xl translate-x-1/3 -translate-y-1/3"></div>
-    </div>
-    <div class="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<div class="page-enter p-8 max-w-7xl mx-auto">
+
+  <!-- ── Welcome Banner ──────────────────────────────────────── -->
+  <div class="relative rounded-2xl overflow-hidden mb-8 p-8"
+       style="background: linear-gradient(135deg, #0F172A 0%, #1a2540 60%, #0F172A 100%)">
+    <div class="absolute top-0 right-0 w-72 h-72 rounded-full pointer-events-none"
+         style="background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 70%); transform: translate(25%, -30%)"></div>
+    <div class="absolute bottom-0 left-20 w-48 h-48 rounded-full pointer-events-none"
+         style="background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%); transform: translateY(40%)"></div>
+
+    <div class="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
       <div>
-        <p class="text-gold text-sm font-medium mb-1">Banker Portal</p>
-        <h1 class="text-2xl lg:text-3xl font-bold text-white">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                style="background: rgba(245,158,11,0.15); color: #F59E0B; border: 1px solid rgba(245,158,11,0.25)">
+            Banker Portal
+          </span>
+        </div>
+        <h1 class="text-2xl lg:text-3xl font-extrabold text-white leading-tight tracking-tight">
           Welcome, {{ currentUser()?.firstName }}!
         </h1>
-        <p class="text-slate-400 mt-2">Here's an overview of pending loan applications.</p>
+        <p class="text-slate-400 mt-2 text-sm">Here's an overview of pending loan applications.</p>
       </div>
-      <a routerLink="/banker/applications" mat-raised-button class="!bg-gold !text-navy !font-bold !rounded-xl !px-6 flex-shrink-0">
-        <mat-icon class="mr-2">list</mat-icon>
+      <a routerLink="/banker/applications" mat-raised-button
+         class="flex-shrink-0 !font-bold !rounded-xl !px-6 !py-3"
+         style="background: linear-gradient(135deg, #F59E0B, #d97706) !important; color: #0F172A !important; box-shadow: 0 4px 20px rgba(245,158,11,0.4) !important">
+        <mat-icon class="mr-1">folder_open</mat-icon>
         View All Applications
       </a>
     </div>
   </div>
 
-  <!-- Stats Cards -->
+  <!-- ── Stats Cards ─────────────────────────────────────────── -->
   <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-    <!-- Total -->
-    <mat-card class="!rounded-2xl shadow-sm border border-slate-100 lg:col-span-1">
-      <mat-card-content class="!p-5">
-        <div class="text-center">
-          <div class="w-10 h-10 rounded-xl bg-navy/10 flex items-center justify-center mx-auto mb-3">
-            <mat-icon class="text-navy">description</mat-icon>
-          </div>
-          <p class="text-2xl font-extrabold text-navy-900">{{ stats()?.totalApplications ?? '—' }}</p>
-          <p class="text-xs text-slate-500 font-medium mt-1">Total</p>
-        </div>
-      </mat-card-content>
-    </mat-card>
 
-    <!-- Pending -->
-    <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-      <mat-card-content class="!p-5">
-        <div class="text-center">
-          <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mx-auto mb-3">
-            <mat-icon class="text-amber-500">schedule</mat-icon>
-          </div>
-          <p class="text-2xl font-extrabold text-amber-600">{{ stats()?.pendingCount ?? '—' }}</p>
-          <p class="text-xs text-slate-500 font-medium mt-1">Pending</p>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow lg:col-span-1">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+           style="background: linear-gradient(135deg, #eff6ff, #dbeafe)">
+        <mat-icon style="color: #3b82f6; font-size: 18px; width: 18px; height: 18px">description</mat-icon>
+      </div>
+      <p class="text-2xl font-extrabold text-slate-900 tracking-tight">{{ stats()?.totalApplications ?? '—' }}</p>
+      <p class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wide">Total</p>
+    </div>
 
-    <!-- Under Review -->
-    <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-      <mat-card-content class="!p-5">
-        <div class="text-center">
-          <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center mx-auto mb-3">
-            <mat-icon class="text-blue-500">find_in_page</mat-icon>
-          </div>
-          <p class="text-2xl font-extrabold text-blue-600">{{ stats()?.underReviewCount ?? '—' }}</p>
-          <p class="text-xs text-slate-500 font-medium mt-1">Reviewing</p>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+           style="background: linear-gradient(135deg, #fffbeb, #fef3c7)">
+        <mat-icon style="color: #f59e0b; font-size: 18px; width: 18px; height: 18px">schedule</mat-icon>
+      </div>
+      <p class="text-2xl font-extrabold tracking-tight" style="color: #d97706">{{ stats()?.pendingCount ?? '—' }}</p>
+      <p class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wide">Pending</p>
+    </div>
 
-    <!-- Approved -->
-    <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-      <mat-card-content class="!p-5">
-        <div class="text-center">
-          <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center mx-auto mb-3">
-            <mat-icon class="text-green-500">check_circle</mat-icon>
-          </div>
-          <p class="text-2xl font-extrabold text-green-600">{{ stats()?.approvedCount ?? '—' }}</p>
-          <p class="text-xs text-slate-500 font-medium mt-1">Approved</p>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+           style="background: linear-gradient(135deg, #eff6ff, #dbeafe)">
+        <mat-icon style="color: #6366f1; font-size: 18px; width: 18px; height: 18px">find_in_page</mat-icon>
+      </div>
+      <p class="text-2xl font-extrabold tracking-tight" style="color: #6366f1">{{ stats()?.underReviewCount ?? '—' }}</p>
+      <p class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wide">Reviewing</p>
+    </div>
 
-    <!-- Rejected -->
-    <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-      <mat-card-content class="!p-5">
-        <div class="text-center">
-          <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center mx-auto mb-3">
-            <mat-icon class="text-red-500">cancel</mat-icon>
-          </div>
-          <p class="text-2xl font-extrabold text-red-600">{{ stats()?.rejectedCount ?? '—' }}</p>
-          <p class="text-xs text-slate-500 font-medium mt-1">Rejected</p>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+           style="background: linear-gradient(135deg, #ecfdf5, #d1fae5)">
+        <mat-icon style="color: #10b981; font-size: 18px; width: 18px; height: 18px">check_circle</mat-icon>
+      </div>
+      <p class="text-2xl font-extrabold tracking-tight" style="color: #059669">{{ stats()?.approvedCount ?? '—' }}</p>
+      <p class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wide">Approved</p>
+    </div>
+
+    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+           style="background: linear-gradient(135deg, #fef2f2, #fee2e2)">
+        <mat-icon style="color: #ef4444; font-size: 18px; width: 18px; height: 18px">cancel</mat-icon>
+      </div>
+      <p class="text-2xl font-extrabold tracking-tight" style="color: #dc2626">{{ stats()?.rejectedCount ?? '—' }}</p>
+      <p class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wide">Rejected</p>
+    </div>
   </div>
 
-  <!-- Recent Applications Table -->
-  <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-    <mat-card-header class="!p-6 !pb-0 flex items-center justify-between">
-      <mat-card-title class="!text-xl !font-bold !text-navy-900">Recent Applications</mat-card-title>
-      <a routerLink="/banker/applications" mat-button class="!text-gold-600 !font-medium">
+  <!-- ── Recent Applications ─────────────────────────────────── -->
+  <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="flex items-center justify-between px-6 py-5" style="border-bottom: 1px solid #f1f5f9">
+      <div>
+        <h2 class="text-base font-bold text-slate-900">Recent Applications</h2>
+        <p class="text-xs text-slate-400 mt-0.5">Latest customer loan requests</p>
+      </div>
+      <a routerLink="/banker/applications" mat-button
+         class="!text-sm !font-semibold !rounded-xl" style="color: #d97706">
         View all <mat-icon class="!text-sm align-middle">arrow_forward</mat-icon>
       </a>
-    </mat-card-header>
+    </div>
 
-    <mat-card-content class="!p-6">
-      <!-- Loading -->
-      <app-loading-skeleton *ngIf="loading()" [count]="5"></app-loading-skeleton>
+    <div *ngIf="loading()" class="p-6">
+      <app-loading-skeleton [count]="5"></app-loading-skeleton>
+    </div>
 
-      <!-- Empty -->
-      <div *ngIf="!loading() && recentApplications().length === 0" class="text-center py-8">
-        <mat-icon class="text-slate-300 !text-5xl">inbox</mat-icon>
-        <p class="text-slate-500 mt-3">No applications yet</p>
-      </div>
+    <div *ngIf="!loading() && recentApplications().length === 0" class="text-center py-12">
+      <mat-icon class="!text-5xl" style="color: #e2e8f0">inbox</mat-icon>
+      <p class="text-slate-400 mt-3 text-sm">No applications yet</p>
+    </div>
 
-      <!-- Table -->
-      <table *ngIf="!loading() && recentApplications().length > 0"
-             mat-table [dataSource]="recentApplications()" class="w-full">
+    <div *ngIf="!loading() && recentApplications().length > 0" class="overflow-x-auto">
+      <table mat-table [dataSource]="recentApplications()" class="w-full">
 
         <ng-container matColumnDef="customer">
-          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Customer</th>
-          <td mat-cell *matCellDef="let app">
-            <div>
-              <p class="font-semibold text-navy-900 text-sm">{{ app.customerName }}</p>
-              <p class="text-xs text-slate-400">{{ app.customerEmail }}</p>
+          <th mat-header-cell *matHeaderCellDef class="!pl-6">Customer</th>
+          <td mat-cell *matCellDef="let app" class="!pl-6">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm font-bold"
+                   style="background: linear-gradient(135deg, #eff6ff, #dbeafe); color: #3b82f6">
+                {{ (app.customerName || 'U')[0] }}
+              </div>
+              <div>
+                <p class="font-semibold text-slate-800 text-sm">{{ app.customerName }}</p>
+                <p class="text-xs text-slate-400">{{ app.customerEmail }}</p>
+              </div>
             </div>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Type</th>
+          <th mat-header-cell *matHeaderCellDef>Type</th>
           <td mat-cell *matCellDef="let app">
-            <span class="text-sm text-navy-800 font-medium">{{ app.type }}</span>
+            <span class="text-sm font-medium text-slate-700">{{ app.type }}</span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Amount</th>
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
           <td mat-cell *matCellDef="let app">
-            <span class="font-bold text-navy-700">{{ formatCurrency(app.amount) }}</span>
+            <span class="font-bold text-slate-900">{{ formatCurrency(app.amount) }}</span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Status</th>
+          <th mat-header-cell *matHeaderCellDef>Status</th>
           <td mat-cell *matCellDef="let app">
             <app-status-badge [status]="app.status"></app-status-badge>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Applied</th>
+          <th mat-header-cell *matHeaderCellDef>Applied</th>
           <td mat-cell *matCellDef="let app" class="text-slate-500 text-sm">
             {{ app.createdAt | date:'MMM d, y' }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let app">
-            <a [routerLink]="['/banker/applications', app.id]" mat-icon-button matTooltip="Review">
-              <mat-icon class="text-slate-500">chevron_right</mat-icon>
+          <th mat-header-cell *matHeaderCellDef class="!pr-6"></th>
+          <td mat-cell *matCellDef="let app" class="!pr-6">
+            <a [routerLink]="['/banker/applications', app.id]" mat-icon-button>
+              <mat-icon class="text-slate-400">chevron_right</mat-icon>
             </a>
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-slate-50"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            class="hover:bg-slate-50 cursor-pointer transition-colors"
+            class="cursor-pointer"
             [routerLink]="['/banker/applications', row.id]"></tr>
       </table>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 </div>

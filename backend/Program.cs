@@ -156,9 +156,9 @@ try
         });
     }
 
+    app.UseCors("Angular");
     app.UseHttpsRedirection();
     app.UseSerilogRequestLogging();
-    app.UseCors("Angular");
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();

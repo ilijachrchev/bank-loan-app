@@ -1,7 +1,8 @@
-<div class="page-enter max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <!-- Back button -->
+<div class="page-enter p-8 max-w-6xl mx-auto">
+
+  <!-- Back -->
   <a routerLink="/banker/applications"
-     class="inline-flex items-center gap-1 text-slate-500 hover:text-navy transition-colors text-sm mb-6 no-underline">
+     class="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-800 transition-colors text-sm mb-6 no-underline font-medium">
     <mat-icon class="!text-base">arrow_back</mat-icon>
     Back to Applications
   </a>
@@ -12,128 +13,124 @@
   </div>
 
   <ng-container *ngIf="!loading() && application() as app">
-    <!-- Header -->
-    <mat-card class="!rounded-2xl shadow-md border border-slate-100 mb-6">
-      <mat-card-content class="!p-6">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center gap-3 mb-2">
-              <h1 class="text-2xl font-bold text-navy-900">{{ app.type }} Loan Application</h1>
-              <app-status-badge [status]="app.status"></app-status-badge>
-            </div>
-            <div class="flex flex-wrap gap-4 text-sm text-slate-500">
-              <span class="flex items-center gap-1">
-                <mat-icon class="!text-base">person</mat-icon>
-                {{ app.customerName }}
-              </span>
-              <span class="flex items-center gap-1">
-                <mat-icon class="!text-base">email</mat-icon>
-                {{ app.customerEmail }}
-              </span>
-              <span class="flex items-center gap-1">
-                <mat-icon class="!text-base">calendar_today</mat-icon>
-                Applied {{ app.createdAt | date:'MMMM d, y' }}
-              </span>
-            </div>
+
+    <!-- Header Card -->
+    <div class="rounded-2xl p-7 mb-6"
+         style="background: linear-gradient(135deg, #0F172A, #1e293b)">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+        <div>
+          <div class="flex items-center gap-3 mb-3">
+            <h1 class="text-xl font-extrabold text-white tracking-tight">{{ app.type }} Loan Application</h1>
+            <app-status-badge [status]="app.status"></app-status-badge>
           </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-3xl font-extrabold text-navy-900">{{ formatCurrency(app.amount) }}</p>
-            <p class="text-slate-500 text-sm mt-1">{{ tenureLabel }}</p>
+          <div class="flex flex-wrap gap-5 text-sm text-slate-400">
+            <span class="flex items-center gap-1.5">
+              <mat-icon style="font-size: 14px; width: 14px; height: 14px">person</mat-icon>
+              {{ app.customerName }}
+            </span>
+            <span class="flex items-center gap-1.5">
+              <mat-icon style="font-size: 14px; width: 14px; height: 14px">email</mat-icon>
+              {{ app.customerEmail }}
+            </span>
+            <span class="flex items-center gap-1.5">
+              <mat-icon style="font-size: 14px; width: 14px; height: 14px">calendar_today</mat-icon>
+              Applied {{ app.createdAt | date:'MMMM d, y' }}
+            </span>
           </div>
         </div>
-      </mat-card-content>
-    </mat-card>
+        <div class="text-right flex-shrink-0">
+          <p class="text-3xl font-extrabold text-white tracking-tight">{{ formatCurrency(app.amount) }}</p>
+          <p class="text-slate-400 text-sm mt-1">{{ tenureLabel }}</p>
+        </div>
+      </div>
+    </div>
 
-    <!-- Main Two-Column Layout -->
+    <!-- Two-Column Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-      <!-- Left: Info -->
-      <div class="lg:col-span-2 space-y-6">
+      <!-- Left: Info + Notes -->
+      <div class="lg:col-span-2 space-y-5">
 
         <!-- Customer Info -->
-        <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-          <mat-card-header class="!p-6 !pb-0">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                <mat-icon class="text-blue-500 !text-base">person</mat-icon>
-              </div>
-              <mat-card-title class="!text-lg !font-bold !text-navy-900">Customer Information</mat-card-title>
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+          <div class="flex items-center gap-3 px-6 py-4" style="border-bottom: 1px solid #f1f5f9">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                 style="background: linear-gradient(135deg, #eff6ff, #dbeafe)">
+              <mat-icon style="color: #3b82f6; font-size: 16px; width: 16px; height: 16px">person</mat-icon>
             </div>
-          </mat-card-header>
-          <mat-card-content class="!p-6">
+            <h2 class="text-sm font-bold text-slate-900">Customer Information</h2>
+          </div>
+          <div class="p-6">
             <div class="grid grid-cols-2 gap-5">
               <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Full Name</p>
-                <p class="font-semibold text-navy-900 mt-1">{{ app.customerName }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Full Name</p>
+                <p class="font-semibold text-slate-900 text-sm">{{ app.customerName }}</p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Email</p>
-                <p class="font-semibold text-navy-900 mt-1 text-sm break-all">{{ app.customerEmail }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Email</p>
+                <p class="font-semibold text-slate-900 text-sm break-all">{{ app.customerEmail }}</p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Monthly Income</p>
-                <p class="font-semibold text-navy-900 mt-1">{{ formatCurrency(app.monthlyIncome) }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Monthly Income</p>
+                <p class="font-semibold text-slate-900 text-sm">{{ formatCurrency(app.monthlyIncome) }}</p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Customer ID</p>
-                <p class="font-mono text-navy-900 mt-1 text-xs">{{ app.customerId }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Customer ID</p>
+                <p class="font-mono text-slate-600 text-xs mt-1">{{ app.customerId }}</p>
               </div>
             </div>
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
 
         <!-- Loan Details -->
-        <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-          <mat-card-header class="!p-6 !pb-0">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center">
-                <mat-icon class="text-gold-600 !text-base">account_balance</mat-icon>
-              </div>
-              <mat-card-title class="!text-lg !font-bold !text-navy-900">Loan Details</mat-card-title>
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+          <div class="flex items-center gap-3 px-6 py-4" style="border-bottom: 1px solid #f1f5f9">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                 style="background: linear-gradient(135deg, #fffbeb, #fef3c7)">
+              <mat-icon style="color: #f59e0b; font-size: 16px; width: 16px; height: 16px">account_balance</mat-icon>
             </div>
-          </mat-card-header>
-          <mat-card-content class="!p-6">
+            <h2 class="text-sm font-bold text-slate-900">Loan Details</h2>
+          </div>
+          <div class="p-6">
             <div class="grid grid-cols-2 gap-5">
               <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Loan Type</p>
-                <p class="font-semibold text-navy-900 mt-1">{{ app.type }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Loan Type</p>
+                <p class="font-semibold text-slate-900 text-sm">{{ app.type }}</p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Amount Requested</p>
-                <p class="font-bold text-navy-900 mt-1 text-lg">{{ formatCurrency(app.amount) }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Amount Requested</p>
+                <p class="font-bold text-slate-900">{{ formatCurrency(app.amount) }}</p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Tenure</p>
-                <p class="font-semibold text-navy-900 mt-1">{{ tenureLabel }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Tenure</p>
+                <p class="font-semibold text-slate-900 text-sm">{{ tenureLabel }}</p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Application Date</p>
-                <p class="font-semibold text-navy-900 mt-1">{{ app.createdAt | date:'MMM d, y' }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Application Date</p>
+                <p class="font-semibold text-slate-900 text-sm">{{ app.createdAt | date:'MMM d, y' }}</p>
               </div>
               <div class="col-span-2">
-                <p class="text-xs text-slate-500 uppercase tracking-wide font-medium">Purpose</p>
-                <p class="font-medium text-navy-900 mt-1 text-sm leading-relaxed">{{ app.purpose }}</p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1.5">Purpose</p>
+                <p class="font-medium text-slate-700 text-sm leading-relaxed">{{ app.purpose }}</p>
               </div>
             </div>
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
 
-        <!-- Notes Section -->
-        <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-          <mat-card-header class="!p-6 !pb-0">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
-                <mat-icon class="text-purple-500 !text-base">note</mat-icon>
-              </div>
-              <mat-card-title class="!text-lg !font-bold !text-navy-900">Banker Notes</mat-card-title>
+        <!-- Banker Notes -->
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+          <div class="flex items-center gap-3 px-6 py-4" style="border-bottom: 1px solid #f1f5f9">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                 style="background: linear-gradient(135deg, #f5f3ff, #ede9fe)">
+              <mat-icon style="color: #8b5cf6; font-size: 16px; width: 16px; height: 16px">note</mat-icon>
             </div>
-          </mat-card-header>
-          <mat-card-content class="!p-6">
-            <!-- Existing Notes -->
+            <h2 class="text-sm font-bold text-slate-900">Banker Notes</h2>
+          </div>
+          <div class="p-6">
             <div class="space-y-3 mb-6" *ngIf="notes().length > 0">
               <div *ngFor="let note of notes()"
-                   class="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                <p class="text-sm text-navy-800 leading-relaxed">{{ note.note }}</p>
+                   class="rounded-xl p-4" style="background: #f8fafc; border: 1px solid #e2e8f0">
+                <p class="text-sm text-slate-700 leading-relaxed">{{ note.note }}</p>
                 <div class="flex items-center justify-between mt-2">
                   <p class="text-xs text-slate-400 font-medium">{{ note.bankerName }}</p>
                   <p class="text-xs text-slate-400">{{ note.createdAt | date:'MMM d, y h:mm a' }}</p>
@@ -145,115 +142,127 @@
               <p class="text-slate-400 text-sm">No notes yet. Add the first note below.</p>
             </div>
 
-            <!-- Add Note Form -->
-            <mat-divider class="mb-5"></mat-divider>
-            <h4 class="font-semibold text-navy-800 text-sm mb-3">Add Note</h4>
-            <form [formGroup]="noteForm" (ngSubmit)="addNote()" class="space-y-3">
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Your note</mat-label>
-                <textarea matInput formControlName="note" rows="3"
-                          placeholder="Add an internal note about this application..."></textarea>
-                <mat-error *ngIf="noteForm.get('note')?.hasError('required')">Note is required</mat-error>
-                <mat-error *ngIf="noteForm.get('note')?.hasError('minlength')">Minimum 5 characters</mat-error>
-              </mat-form-field>
-              <button mat-raised-button type="submit"
-                      class="!bg-navy !text-white !rounded-xl" [disabled]="noteSubmitting()">
-                <span *ngIf="!noteSubmitting()">
-                  <mat-icon class="mr-1">add</mat-icon> Add Note
-                </span>
-                <mat-spinner *ngIf="noteSubmitting()" diameter="18" class="inline-block"></mat-spinner>
-              </button>
-            </form>
-          </mat-card-content>
-        </mat-card>
+            <div style="border-top: 1px solid #f1f5f9; padding-top: 20px">
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Add Note</p>
+              <form [formGroup]="noteForm" (ngSubmit)="addNote()" class="space-y-3">
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Your note</mat-label>
+                  <textarea matInput formControlName="note" rows="3"
+                            placeholder="Add an internal note about this application..."></textarea>
+                  <mat-error *ngIf="noteForm.get('note')?.hasError('required')">Note is required</mat-error>
+                  <mat-error *ngIf="noteForm.get('note')?.hasError('minlength')">Minimum 5 characters</mat-error>
+                </mat-form-field>
+                <button mat-raised-button type="submit"
+                        class="!rounded-xl !font-semibold !px-5" [disabled]="noteSubmitting()"
+                        style="background: #0F172A !important; color: white !important">
+                  <span *ngIf="!noteSubmitting()">
+                    <mat-icon class="mr-1">add</mat-icon> Add Note
+                  </span>
+                  <mat-spinner *ngIf="noteSubmitting()" diameter="18" class="inline-block"></mat-spinner>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Right: Actions + Timeline -->
-      <div class="space-y-6">
+      <div class="space-y-5">
 
-        <!-- Action Buttons -->
-        <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-          <mat-card-header class="!p-6 !pb-0">
-            <mat-card-title class="!text-lg !font-bold !text-navy-900">Actions</mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="!p-6 space-y-3">
+        <!-- Actions -->
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+          <div class="flex items-center gap-3 px-6 py-4" style="border-bottom: 1px solid #f1f5f9">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                 style="background: linear-gradient(135deg, #f0fdf4, #dcfce7)">
+              <mat-icon style="color: #22c55e; font-size: 16px; width: 16px; height: 16px">bolt</mat-icon>
+            </div>
+            <h2 class="text-sm font-bold text-slate-900">Actions</h2>
+          </div>
+          <div class="p-5 space-y-3">
 
             <div *ngIf="app.status === 'Approved' || app.status === 'Rejected'"
-                 class="bg-slate-50 rounded-xl p-4 text-center">
-              <mat-icon [class.text-green-500]="app.status === 'Approved'"
-                        [class.text-red-500]="app.status === 'Rejected'"
-                        class="!text-3xl mb-2">
+                 class="rounded-xl p-5 text-center" style="background: #f8fafc; border: 1px solid #e2e8f0">
+              <mat-icon class="!text-3xl mb-2"
+                        [style.color]="app.status === 'Approved' ? '#10b981' : '#ef4444'">
                 {{ app.status === 'Approved' ? 'check_circle' : 'cancel' }}
               </mat-icon>
-              <p class="font-semibold" [class.text-green-700]="app.status === 'Approved'"
-                 [class.text-red-700]="app.status === 'Rejected'">
+              <p class="font-bold text-sm"
+                 [style.color]="app.status === 'Approved' ? '#059669' : '#dc2626'">
                 Application {{ app.status }}
               </p>
               <p class="text-xs text-slate-400 mt-1">No further action needed</p>
             </div>
 
             <button *ngIf="canMarkUnderReview" mat-raised-button
-                    class="w-full !bg-blue-600 !text-white !rounded-xl !py-3"
+                    class="w-full !rounded-xl !py-3 !font-semibold"
+                    style="background: #4f46e5 !important; color: white !important"
                     [disabled]="actionLoading()"
                     (click)="updateStatus('UnderReview', 'Mark Under Review')">
-              <mat-icon>find_in_page</mat-icon>
+              <mat-icon class="mr-1">find_in_page</mat-icon>
               Mark Under Review
             </button>
 
             <button *ngIf="canApprove" mat-raised-button
-                    class="w-full !bg-green-600 !text-white !rounded-xl !py-3"
+                    class="w-full !rounded-xl !py-3 !font-semibold"
+                    style="background: #059669 !important; color: white !important"
                     [disabled]="actionLoading()"
                     (click)="updateStatus('Approved', 'Approve')">
-              <mat-icon>check_circle</mat-icon>
+              <mat-icon class="mr-1">check_circle</mat-icon>
               Approve Application
             </button>
 
             <button *ngIf="canReject" mat-raised-button
-                    class="w-full !bg-red-600 !text-white !rounded-xl !py-3"
+                    class="w-full !rounded-xl !py-3 !font-semibold"
+                    style="background: #dc2626 !important; color: white !important"
                     [disabled]="actionLoading()"
                     (click)="updateStatus('Rejected', 'Reject')">
-              <mat-icon>cancel</mat-icon>
+              <mat-icon class="mr-1">cancel</mat-icon>
               Reject Application
             </button>
 
             <button *ngIf="canRequestMoreInfo" mat-stroked-button
-                    class="w-full !rounded-xl !py-3 !border-orange-300 !text-orange-700"
+                    class="w-full !rounded-xl !py-3 !font-semibold"
+                    style="border-color: #f97316 !important; color: #ea580c !important"
                     [disabled]="actionLoading()"
                     (click)="updateStatus('MoreInfoRequired', 'Request More Info')">
-              <mat-icon>help_outline</mat-icon>
+              <mat-icon class="mr-1">help_outline</mat-icon>
               Request More Info
             </button>
 
             <div *ngIf="actionLoading()" class="flex items-center justify-center py-2">
               <mat-spinner diameter="28"></mat-spinner>
             </div>
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
 
-        <!-- Status Timeline -->
-        <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-          <mat-card-header class="!p-6 !pb-0">
-            <mat-card-title class="!text-lg !font-bold !text-navy-900">Timeline</mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="!p-6">
-            <div *ngIf="app.statusHistory && app.statusHistory.length > 0" class="space-y-3">
+        <!-- Timeline -->
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+          <div class="flex items-center gap-3 px-6 py-4" style="border-bottom: 1px solid #f1f5f9">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                 style="background: linear-gradient(135deg, #ecfdf5, #d1fae5)">
+              <mat-icon style="color: #10b981; font-size: 16px; width: 16px; height: 16px">timeline</mat-icon>
+            </div>
+            <h2 class="text-sm font-bold text-slate-900">Timeline</h2>
+          </div>
+          <div class="p-6">
+            <div *ngIf="app.statusHistory && app.statusHistory.length > 0" class="space-y-1">
               <div *ngFor="let history of app.statusHistory; let last = last" class="flex gap-3">
                 <div class="flex flex-col items-center">
                   <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
                        [class.bg-green-100]="history.status === 'Approved'"
                        [class.bg-red-100]="history.status === 'Rejected'"
-                       [class.bg-blue-100]="history.status === 'UnderReview'"
+                       [class.bg-indigo-100]="history.status === 'UnderReview'"
                        [class.bg-amber-100]="history.status === 'Pending'"
                        [class.bg-orange-100]="history.status === 'MoreInfoRequired'">
                     <mat-icon class="!text-sm" [class]="getStatusColor(history.status)">
                       {{ getStatusIcon(history.status) }}
                     </mat-icon>
                   </div>
-                  <div *ngIf="!last" class="w-0.5 bg-slate-200 flex-1 my-1 min-h-4"></div>
+                  <div *ngIf="!last" class="w-0.5 flex-1 my-1 min-h-5" style="background: #e2e8f0"></div>
                 </div>
-                <div class="pb-4 min-w-0">
+                <div class="pb-5 min-w-0">
                   <app-status-badge [status]="history.status"></app-status-badge>
-                  <p *ngIf="history.note" class="text-slate-600 text-xs mt-1 italic">{{ history.note }}</p>
+                  <p *ngIf="history.note" class="text-slate-500 text-xs mt-1.5 italic">{{ history.note }}</p>
                   <p class="text-slate-400 text-xs mt-1">{{ history.changedAt | date:'MMM d, y h:mm a' }}</p>
                 </div>
               </div>
@@ -262,8 +271,8 @@
             <div *ngIf="!app.statusHistory || app.statusHistory.length === 0" class="text-center py-4">
               <p class="text-slate-400 text-sm">No history available</p>
             </div>
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
       </div>
     </div>
   </ng-container>

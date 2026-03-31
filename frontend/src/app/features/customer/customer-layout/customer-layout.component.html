@@ -1,4 +1,69 @@
-<app-navbar></app-navbar>
-<main class="min-h-screen bg-slate-50">
-  <router-outlet></router-outlet>
-</main>
+<div class="flex h-screen overflow-hidden" style="background:#f1f5f9">
+
+  <!-- ── Sidebar ─────────────────────────────────────────────── -->
+  <aside class="sidebar w-64 flex-shrink-0 flex flex-col fixed inset-y-0 left-0 z-50 overflow-y-auto">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3 px-5 py-5" style="border-bottom: 1px solid rgba(255,255,255,0.06)">
+      <a routerLink="/" class="flex items-center gap-3 no-underline group flex-1 min-w-0">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg"
+             style="background: linear-gradient(135deg, #F59E0B, #d97706); box-shadow: 0 4px 16px rgba(245,158,11,0.35)">
+          <span class="text-navy font-black text-base">V</span>
+        </div>
+        <div class="min-w-0">
+          <div class="text-white font-bold text-sm leading-tight tracking-tight group-hover:text-gold transition-colors">VaultBank Pro</div>
+          <div class="text-xs font-medium" style="color: rgba(245,158,11,0.6)">Customer Portal</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-3 pt-3 pb-4">
+      <span class="nav-label">Main</span>
+
+      <a routerLink="/customer/dashboard" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}"
+         class="sidebar-link">
+        <mat-icon>grid_view</mat-icon>
+        <span>Dashboard</span>
+      </a>
+
+      <a routerLink="/customer/applications" routerLinkActive="active"
+         class="sidebar-link">
+        <mat-icon>description</mat-icon>
+        <span>My Applications</span>
+      </a>
+
+      <span class="nav-label">Actions</span>
+
+      <a routerLink="/customer/apply" routerLinkActive="active"
+         class="sidebar-link">
+        <mat-icon>add_circle_outline</mat-icon>
+        <span>Apply for Loan</span>
+      </a>
+    </nav>
+
+    <!-- User Footer -->
+    <div style="border-top: 1px solid rgba(255,255,255,0.06); padding: 12px">
+      <div class="user-card">
+        <div class="user-avatar">
+          <span>{{ (currentUser?.firstName || 'U')[0] }}</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-white text-sm font-semibold truncate leading-tight">
+            {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+          </div>
+          <div class="text-xs font-medium mt-0.5" style="color: rgba(245,158,11,0.7)">Customer</div>
+        </div>
+        <button (click)="logout()" mat-icon-button class="logout-btn flex-shrink-0" matTooltip="Sign out">
+          <mat-icon style="font-size: 17px; width: 17px; height: 17px">logout</mat-icon>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ─────────────────────────────────────────── -->
+  <main class="ml-64 flex-1 min-h-screen overflow-y-auto">
+    <router-outlet></router-outlet>
+  </main>
+</div>

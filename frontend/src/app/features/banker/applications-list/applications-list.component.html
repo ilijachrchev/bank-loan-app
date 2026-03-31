@@ -1,123 +1,118 @@
-<div class="page-enter max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="page-enter p-8 max-w-7xl mx-auto">
+
   <!-- Header -->
-  <div class="mb-6">
-    <h1 class="text-2xl lg:text-3xl font-bold text-navy-900">All Applications</h1>
-    <p class="text-slate-500 mt-1">Review and manage all loan applications</p>
+  <div class="mb-8">
+    <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">All Applications</h1>
+    <p class="text-slate-500 mt-1 text-sm">Review and manage all customer loan applications</p>
   </div>
 
   <!-- Filters -->
-  <mat-card class="!rounded-2xl shadow-sm border border-slate-100 mb-6">
-    <mat-card-content class="!p-5">
-      <div class="flex flex-col gap-4">
-        <!-- Search -->
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Search applications</mat-label>
-          <input matInput [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)"
-                 placeholder="Search by customer name, email, type...">
-          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
-        </mat-form-field>
+  <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-6">
+    <div class="flex flex-col gap-4">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Search applications</mat-label>
+        <input matInput [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)"
+               placeholder="Search by customer name, email, type...">
+        <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+      </mat-form-field>
 
-        <!-- Status Filter Chips -->
-        <div class="flex flex-wrap gap-2">
-          <button *ngFor="let filter of statusFilters"
-                  (click)="selectedStatus.set(filter.value); pageIndex.set(0)"
-                  class="px-3 py-1.5 rounded-full text-sm font-medium border transition-all"
-                  [class.bg-navy]="selectedStatus() === filter.value && !filter.color"
-                  [class.text-white]="selectedStatus() === filter.value && !filter.color"
-                  [class.border-navy]="selectedStatus() === filter.value && !filter.color"
-                  [class.bg-slate-100]="selectedStatus() !== filter.value || filter.color"
-                  [class.text-slate-600]="selectedStatus() !== filter.value"
-                  [class.border-transparent]="selectedStatus() !== filter.value">
-            {{ filter.label }}
-          </button>
-        </div>
+      <div class="flex flex-wrap gap-2">
+        <button *ngFor="let filter of statusFilters"
+                (click)="selectedStatus.set(filter.value); pageIndex.set(0)"
+                class="px-4 py-2 rounded-xl text-sm font-semibold transition-all border"
+                [style.background]="selectedStatus() === filter.value ? '#0F172A' : 'transparent'"
+                [style.color]="selectedStatus() === filter.value ? 'white' : '#64748b'"
+                [style.borderColor]="selectedStatus() === filter.value ? '#0F172A' : '#e2e8f0'">
+          {{ filter.label }}
+        </button>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 
   <!-- Table -->
-  <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-    <mat-card-content class="!p-0">
-      <!-- Loading -->
-      <div *ngIf="loading()" class="p-6">
-        <app-loading-skeleton [count]="8"></app-loading-skeleton>
-      </div>
+  <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
 
-      <!-- Empty -->
-      <app-empty-state
-        *ngIf="!loading() && filteredApplications().length === 0"
-        icon="📋"
-        title="No applications found"
-        message="No loan applications match your filters.">
-      </app-empty-state>
+    <div *ngIf="loading()" class="p-6">
+      <app-loading-skeleton [count]="8"></app-loading-skeleton>
+    </div>
 
-      <!-- Table -->
-      <div *ngIf="!loading() && filteredApplications().length > 0" class="overflow-x-auto">
-        <table mat-table [dataSource]="pagedApplications()" class="w-full">
+    <app-empty-state
+      *ngIf="!loading() && filteredApplications().length === 0"
+      icon="📋"
+      title="No applications found"
+      message="No loan applications match your filters.">
+    </app-empty-state>
 
-          <ng-container matColumnDef="customer">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600 !pl-6">Customer</th>
-            <td mat-cell *matCellDef="let app" class="!pl-6">
+    <div *ngIf="!loading() && filteredApplications().length > 0" class="overflow-x-auto">
+      <table mat-table [dataSource]="pagedApplications()" class="w-full">
+
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef class="!pl-6">Customer</th>
+          <td mat-cell *matCellDef="let app" class="!pl-6">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm font-bold"
+                   style="background: linear-gradient(135deg, #eff6ff, #dbeafe); color: #3b82f6">
+                {{ (app.customerName || 'U')[0] }}
+              </div>
               <div>
-                <p class="font-semibold text-navy-900 text-sm">{{ app.customerName }}</p>
+                <p class="font-semibold text-slate-800 text-sm">{{ app.customerName }}</p>
                 <p class="text-xs text-slate-400">{{ app.customerEmail }}</p>
               </div>
-            </td>
-          </ng-container>
+            </div>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Type</th>
-            <td mat-cell *matCellDef="let app">
-              <span class="text-sm font-medium text-navy-800">{{ app.type }}</span>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let app">
+            <span class="text-sm font-semibold text-slate-700">{{ app.type }}</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Amount</th>
-            <td mat-cell *matCellDef="let app">
-              <span class="font-bold text-navy-700">{{ formatCurrency(app.amount) }}</span>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let app">
+            <span class="font-bold text-slate-900">{{ formatCurrency(app.amount) }}</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Status</th>
-            <td mat-cell *matCellDef="let app">
-              <app-status-badge [status]="app.status"></app-status-badge>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let app">
+            <app-status-badge [status]="app.status"></app-status-badge>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Applied</th>
-            <td mat-cell *matCellDef="let app" class="text-slate-500 text-sm">
-              {{ app.createdAt | date:'MMM d, y' }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Applied</th>
+          <td mat-cell *matCellDef="let app" class="text-slate-500 text-sm">
+            {{ app.createdAt | date:'MMM d, y' }}
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef class="!pr-6"></th>
-            <td mat-cell *matCellDef="let app" class="!pr-6">
-              <a [routerLink]="['/banker/applications', app.id]" mat-icon-button matTooltip="Review application">
-                <mat-icon class="text-slate-500">chevron_right</mat-icon>
-              </a>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="!pr-6"></th>
+          <td mat-cell *matCellDef="let app" class="!pr-6">
+            <a [routerLink]="['/banker/applications', app.id]" mat-icon-button>
+              <mat-icon class="text-slate-400">chevron_right</mat-icon>
+            </a>
+          </td>
+        </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-slate-50"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-              class="hover:bg-slate-50 cursor-pointer transition-colors"
-              [routerLink]="['/banker/applications', row.id]"></tr>
-        </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="cursor-pointer"
+            [routerLink]="['/banker/applications', row.id]"></tr>
+      </table>
 
-        <!-- Paginator -->
-        <mat-paginator
-          [length]="filteredApplications().length"
-          [pageSize]="pageSize()"
-          [pageIndex]="pageIndex()"
-          [pageSizeOptions]="[10, 25, 50]"
-          (page)="onPageChange($event)"
-          class="border-t border-slate-100">
-        </mat-paginator>
-      </div>
-    </mat-card-content>
-  </mat-card>
+      <mat-paginator
+        [length]="filteredApplications().length"
+        [pageSize]="pageSize()"
+        [pageIndex]="pageIndex()"
+        [pageSizeOptions]="[10, 25, 50]"
+        (page)="onPageChange($event)"
+        style="border-top: 1px solid #f1f5f9">
+      </mat-paginator>
+    </div>
+  </div>
 </div>

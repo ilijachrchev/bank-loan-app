@@ -1,114 +1,109 @@
-<div class="page-enter max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="page-enter p-8 max-w-7xl mx-auto">
+
   <!-- Header -->
-  <div class="flex items-center justify-between mb-6">
+  <div class="flex items-center justify-between mb-8">
     <div>
-      <h1 class="text-2xl lg:text-3xl font-bold text-navy-900">My Applications</h1>
-      <p class="text-slate-500 mt-1">Track and manage all your loan applications</p>
+      <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">My Applications</h1>
+      <p class="text-slate-500 mt-1 text-sm">Track and manage all your loan applications</p>
     </div>
-    <a routerLink="/customer/apply" mat-raised-button class="!bg-navy !text-white !rounded-xl">
-      <mat-icon>add</mat-icon> Apply New
+    <a routerLink="/customer/apply" mat-raised-button
+       class="!rounded-xl !font-semibold !px-5"
+       style="background: #0F172A !important; color: white !important">
+      <mat-icon class="mr-1">add</mat-icon> Apply New
     </a>
   </div>
 
   <!-- Filters -->
-  <mat-card class="!rounded-2xl shadow-sm border border-slate-100 mb-6">
-    <mat-card-content class="!p-5">
-      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-        <!-- Search -->
-        <mat-form-field appearance="outline" class="flex-1">
-          <mat-label>Search applications</mat-label>
-          <input matInput [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" placeholder="Search by type or purpose...">
-          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
-        </mat-form-field>
+  <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-6">
+    <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Search applications</mat-label>
+        <input matInput [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)"
+               placeholder="Search by type or purpose...">
+        <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+      </mat-form-field>
 
-        <!-- Status chips -->
-        <div class="flex flex-wrap gap-2">
-          <button *ngFor="let filter of statusFilters"
-                  (click)="selectedStatus.set(filter.value)"
-                  class="px-3 py-1.5 rounded-full text-sm font-medium transition-all"
-                  [class.bg-navy]="selectedStatus() === filter.value"
-                  [class.text-white]="selectedStatus() === filter.value"
-                  [class.bg-slate-100]="selectedStatus() !== filter.value"
-                  [class.text-slate-600]="selectedStatus() !== filter.value">
-            {{ filter.label }}
-          </button>
-        </div>
+      <div class="flex flex-wrap gap-2">
+        <button *ngFor="let filter of statusFilters"
+                (click)="selectedStatus.set(filter.value)"
+                class="px-4 py-2 rounded-xl text-sm font-semibold transition-all border"
+                [style.background]="selectedStatus() === filter.value ? '#0F172A' : 'transparent'"
+                [style.color]="selectedStatus() === filter.value ? 'white' : '#64748b'"
+                [style.borderColor]="selectedStatus() === filter.value ? '#0F172A' : '#e2e8f0'">
+          {{ filter.label }}
+        </button>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 
-  <!-- Table Card -->
-  <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
-    <mat-card-content class="!p-0">
-      <!-- Loading -->
-      <div *ngIf="loading()" class="p-6">
-        <app-loading-skeleton [count]="5"></app-loading-skeleton>
-      </div>
+  <!-- Table -->
+  <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
 
-      <!-- Empty -->
-      <app-empty-state
-        *ngIf="!loading() && filteredApplications().length === 0"
-        icon="📋"
-        title="No applications found"
-        [message]="applications().length === 0 ? 'You have not applied for any loans yet.' : 'No applications match your current filters.'"
-        actionLabel="Apply for a Loan"
-        actionLink="/customer/apply">
-      </app-empty-state>
+    <div *ngIf="loading()" class="p-6">
+      <app-loading-skeleton [count]="5"></app-loading-skeleton>
+    </div>
 
-      <!-- Table -->
-      <div *ngIf="!loading() && filteredApplications().length > 0" class="overflow-x-auto">
-        <table mat-table [dataSource]="filteredApplications()" class="w-full">
+    <app-empty-state
+      *ngIf="!loading() && filteredApplications().length === 0"
+      icon="📋"
+      title="No applications found"
+      [message]="applications().length === 0 ? 'You have not applied for any loans yet.' : 'No applications match your current filters.'"
+      actionLabel="Apply for a Loan"
+      actionLink="/customer/apply">
+    </app-empty-state>
 
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600 !pl-6">Type</th>
-            <td mat-cell *matCellDef="let app" class="!pl-6">
-              <span class="font-semibold text-navy-900">{{ app.type }}</span>
-            </td>
-          </ng-container>
+    <div *ngIf="!loading() && filteredApplications().length > 0" class="overflow-x-auto">
+      <table mat-table [dataSource]="filteredApplications()" class="w-full">
 
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Amount</th>
-            <td mat-cell *matCellDef="let app">
-              <span class="font-bold text-navy-700">{{ formatCurrency(app.amount) }}</span>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef class="!pl-6">Type</th>
+          <td mat-cell *matCellDef="let app" class="!pl-6">
+            <span class="font-semibold text-slate-800 text-sm">{{ app.type }}</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="purpose">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Purpose</th>
-            <td mat-cell *matCellDef="let app">
-              <span class="text-slate-600 text-sm line-clamp-1 max-w-xs">{{ app.purpose }}</span>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let app">
+            <span class="font-bold text-slate-900">{{ formatCurrency(app.amount) }}</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Status</th>
-            <td mat-cell *matCellDef="let app">
-              <app-status-badge [status]="app.status"></app-status-badge>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="purpose">
+          <th mat-header-cell *matHeaderCellDef>Purpose</th>
+          <td mat-cell *matCellDef="let app">
+            <span class="text-slate-500 text-sm line-clamp-1 max-w-xs">{{ app.purpose }}</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Applied</th>
-            <td mat-cell *matCellDef="let app" class="text-slate-500 text-sm">
-              {{ app.createdAt | date:'MMM d, y' }}
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let app">
+            <app-status-badge [status]="app.status"></app-status-badge>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef class="!pr-6"></th>
-            <td mat-cell *matCellDef="let app" class="!pr-6">
-              <a [routerLink]="['/customer/applications', app.id]" mat-icon-button matTooltip="View details">
-                <mat-icon class="text-slate-500">chevron_right</mat-icon>
-              </a>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Applied</th>
+          <td mat-cell *matCellDef="let app" class="text-slate-500 text-sm">
+            {{ app.createdAt | date:'MMM d, y' }}
+          </td>
+        </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-slate-50"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-              class="hover:bg-slate-50 cursor-pointer transition-colors"
-              [routerLink]="['/customer/applications', row.id]"></tr>
-        </table>
-      </div>
-    </mat-card-content>
-  </mat-card>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="!pr-6"></th>
+          <td mat-cell *matCellDef="let app" class="!pr-6">
+            <a [routerLink]="['/customer/applications', app.id]" mat-icon-button>
+              <mat-icon class="text-slate-400">chevron_right</mat-icon>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="cursor-pointer"
+            [routerLink]="['/customer/applications', row.id]"></tr>
+      </table>
+    </div>
+  </div>
 </div>

@@ -157,7 +157,6 @@ try
     }
 
     app.UseCors("Angular");
-    app.UseHttpsRedirection();
     app.UseSerilogRequestLogging();
     app.UseAuthentication();
     app.UseAuthorization();

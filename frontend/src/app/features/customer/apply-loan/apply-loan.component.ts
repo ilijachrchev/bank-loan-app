@@ -82,7 +82,7 @@ export class ApplyLoanComponent {
     this.loading.set(true);
 
     const payload = {
-      type: this.loanDetailsForm.value.type as LoanType,
+      type: ['Personal', 'Home', 'Car', 'Business', 'Education'].indexOf(this.loanDetailsForm.value.type as string),
       amount: this.loanDetailsForm.value.amount!,
       purpose: this.loanDetailsForm.value.purpose!,
       tenure: this.loanDetailsForm.value.tenure!,

@@ -1,0 +1,100 @@
+<div class="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-12">
+  <div class="w-full max-w-lg">
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <a routerLink="/" class="inline-flex items-center gap-2 no-underline">
+        <div class="w-12 h-12 bg-navy rounded-xl flex items-center justify-center shadow-lg">
+          <span class="text-gold font-bold text-2xl">B</span>
+        </div>
+        <span class="text-navy font-bold text-2xl">BankLoan <span class="text-gold-600">Pro</span></span>
+      </a>
+      <h1 class="text-2xl font-bold text-navy-900 mt-4">Create your account</h1>
+      <p class="text-slate-500 mt-1">Start your loan journey today</p>
+    </div>
+
+    <mat-card class="shadow-xl !rounded-2xl overflow-hidden">
+      <div class="h-2 bg-gradient-to-r from-navy via-navy-700 to-gold"></div>
+
+      <mat-card-content class="!p-8">
+        <!-- Error Alert -->
+        <div *ngIf="errorMessage()" class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+          <mat-icon class="text-red-500 !text-lg flex-shrink-0 mt-0.5">error_outline</mat-icon>
+          <p class="text-red-700 text-sm">{{ errorMessage() }}</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+          <!-- Name Row -->
+          <div class="grid grid-cols-2 gap-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" placeholder="John">
+              <mat-error *ngIf="form.get('firstName')?.hasError('required')">Required</mat-error>
+              <mat-error *ngIf="form.get('firstName')?.hasError('minlength')">Min 2 characters</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" placeholder="Doe">
+              <mat-error *ngIf="form.get('lastName')?.hasError('required')">Required</mat-error>
+              <mat-error *ngIf="form.get('lastName')?.hasError('minlength')">Min 2 characters</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Email address</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="you@example.com" autocomplete="email">
+            <mat-icon matSuffix class="text-slate-400">email</mat-icon>
+            <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('email')">Enter a valid email</mat-error>
+          </mat-form-field>
+
+          <!-- Role -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Account Type</mat-label>
+            <mat-select formControlName="role">
+              <mat-option value="Customer">Customer - Apply for loans</mat-option>
+              <mat-option value="Banker">Banker - Review applications</mat-option>
+            </mat-select>
+            <mat-icon matSuffix class="text-slate-400">badge</mat-icon>
+          </mat-form-field>
+
+          <!-- Password -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" autocomplete="new-password">
+            <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
+              <mat-icon class="text-slate-400">{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('minlength')">Minimum 8 characters</mat-error>
+          </mat-form-field>
+
+          <!-- Confirm Password -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput [type]="hideConfirmPassword() ? 'password' : 'text'" formControlName="confirmPassword" autocomplete="new-password">
+            <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword.set(!hideConfirmPassword())">
+              <mat-icon class="text-slate-400">{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">Please confirm your password</mat-error>
+            <mat-error *ngIf="form.get('confirmPassword')?.hasError('passwordMismatch')">Passwords do not match</mat-error>
+          </mat-form-field>
+
+          <!-- Submit -->
+          <button mat-raised-button type="submit"
+                  class="w-full !bg-navy !text-white !py-3 !rounded-xl !font-semibold !text-base !mt-2"
+                  [disabled]="loading()">
+            <span *ngIf="!loading()">Create Account</span>
+            <mat-spinner *ngIf="loading()" diameter="22" class="inline-block mx-auto"></mat-spinner>
+          </button>
+        </form>
+
+        <p class="text-center text-slate-500 mt-6 text-sm">
+          Already have an account?
+          <a routerLink="/login" class="text-gold-600 font-semibold hover:text-gold-700 no-underline ml-1">Sign in</a>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,165 @@
+<app-navbar></app-navbar>
+
+<!-- Hero Section -->
+<section class="hero-section relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700"></div>
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-0 left-0 w-96 h-96 rounded-full bg-gold blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-gold blur-3xl translate-x-1/3 translate-y-1/3"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36">
+    <div class="text-center max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-gold/20 border border-gold/30 rounded-full px-4 py-1.5 mb-6">
+        <span class="text-gold text-sm font-medium">Trusted by 10,000+ customers</span>
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-tight">
+        Smart Banking,
+        <span class="text-gold"> Simplified</span>
+      </h1>
+      <p class="text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+        Apply for personal, home, car, business, or education loans with a streamlined digital process.
+        Fast approvals, transparent terms, and expert support.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a routerLink="/register" mat-raised-button
+           class="!bg-gold !text-navy !font-bold !text-lg !px-8 !py-3 !rounded-xl !shadow-lg hover:!shadow-gold/30 transition-all">
+          Apply Now
+        </a>
+        <a routerLink="/login" mat-stroked-button
+           class="!text-white !border-white/40 !text-lg !px-8 !py-3 !rounded-xl hover:!bg-white/10 transition-all">
+          Sign In
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="absolute bottom-0 w-full">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 60L1440 60L1440 30C1200 0 960 60 720 30C480 0 240 60 0 30L0 60Z" fill="#f8fafc"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="bg-white py-10 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div *ngFor="let stat of stats" class="text-center">
+        <div class="text-3xl lg:text-4xl font-extrabold text-navy-900">{{ stat.value }}</div>
+        <div class="text-slate-500 mt-1 text-sm font-medium">{{ stat.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 mb-4">Why Choose BankLoan Pro?</h2>
+      <p class="text-slate-500 text-lg max-w-2xl mx-auto">We make the loan process transparent, fast, and stress-free.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let feature of features"
+           class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 hover:border-gold/30 group">
+        <div class="text-4xl mb-4">{{ feature.icon }}</div>
+        <h3 class="text-lg font-bold text-navy-900 mb-2 group-hover:text-gold transition-colors">{{ feature.title }}</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">{{ feature.desc }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 mb-4">How It Works</h2>
+      <p class="text-slate-500 text-lg">Three simple steps to get your loan.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+      <!-- connector line -->
+      <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-gold/20 via-gold to-gold/20"></div>
+
+      <div *ngFor="let step of steps" class="flex flex-col items-center text-center relative">
+        <div class="w-24 h-24 rounded-full bg-navy flex items-center justify-center mb-6 shadow-lg shadow-navy/30 relative z-10">
+          <span class="text-gold text-3xl font-extrabold">{{ step.num }}</span>
+        </div>
+        <h3 class="text-xl font-bold text-navy-900 mb-3">{{ step.title }}</h3>
+        <p class="text-slate-500 leading-relaxed">{{ step.desc }}</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <a routerLink="/register" mat-raised-button
+         class="!bg-navy !text-white !font-semibold !px-10 !py-3 !rounded-xl">
+        Start Your Application
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Loan Types -->
+<section class="py-20 bg-navy">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4">Loan Products</h2>
+      <p class="text-slate-400 text-lg">Flexible solutions for every financial need.</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div *ngFor="let loan of ['Personal', 'Home', 'Car', 'Business', 'Education']"
+           class="bg-navy-800 rounded-xl p-6 text-center hover:bg-gold/10 hover:border-gold/30 border border-navy-700 transition-all cursor-pointer group">
+        <div class="text-3xl mb-3">
+          <ng-container [ngSwitch]="loan">
+            <span *ngSwitchCase="'Personal'">💰</span>
+            <span *ngSwitchCase="'Home'">🏠</span>
+            <span *ngSwitchCase="'Car'">🚗</span>
+            <span *ngSwitchCase="'Business'">💼</span>
+            <span *ngSwitchCase="'Education'">🎓</span>
+          </ng-container>
+        </div>
+        <p class="text-white font-semibold group-hover:text-gold transition-colors">{{ loan }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-gold-600 to-gold">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-3xl lg:text-4xl font-bold text-navy-900 mb-4">Ready to Get Started?</h2>
+    <p class="text-navy-800 text-lg mb-8">Join thousands of customers who trust BankLoan Pro for their financial needs.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a routerLink="/register" mat-raised-button
+         class="!bg-navy !text-white !font-bold !text-lg !px-8 !py-3 !rounded-xl">
+        Create Free Account
+      </a>
+      <a routerLink="/login" mat-stroked-button
+         class="!text-navy !border-navy/40 !text-lg !px-8 !py-3 !rounded-xl">
+        Sign In
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-navy-900 text-slate-400 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-gold rounded-lg flex items-center justify-center">
+          <span class="text-navy font-bold">B</span>
+        </div>
+        <span class="text-white font-bold text-lg">BankLoan <span class="text-gold">Pro</span></span>
+      </div>
+      <p class="text-sm">&copy; 2026 BankLoan Pro. All rights reserved.</p>
+      <div class="flex gap-6 text-sm">
+        <a href="#" class="hover:text-gold transition-colors">Privacy Policy</a>
+        <a href="#" class="hover:text-gold transition-colors">Terms of Service</a>
+        <a href="#" class="hover:text-gold transition-colors">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,167 @@
+<div class="page-enter max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Welcome Banner -->
+  <div class="bg-gradient-to-r from-navy to-navy-700 rounded-2xl p-8 mb-8 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-gold blur-3xl translate-x-1/3 -translate-y-1/3"></div>
+    </div>
+    <div class="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div>
+        <p class="text-gold text-sm font-medium mb-1">Banker Portal</p>
+        <h1 class="text-2xl lg:text-3xl font-bold text-white">
+          Welcome, {{ currentUser()?.firstName }}!
+        </h1>
+        <p class="text-slate-400 mt-2">Here's an overview of pending loan applications.</p>
+      </div>
+      <a routerLink="/banker/applications" mat-raised-button class="!bg-gold !text-navy !font-bold !rounded-xl !px-6 flex-shrink-0">
+        <mat-icon class="mr-2">list</mat-icon>
+        View All Applications
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+    <!-- Total -->
+    <mat-card class="!rounded-2xl shadow-sm border border-slate-100 lg:col-span-1">
+      <mat-card-content class="!p-5">
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-xl bg-navy/10 flex items-center justify-center mx-auto mb-3">
+            <mat-icon class="text-navy">description</mat-icon>
+          </div>
+          <p class="text-2xl font-extrabold text-navy-900">{{ stats()?.totalApplications ?? '—' }}</p>
+          <p class="text-xs text-slate-500 font-medium mt-1">Total</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Pending -->
+    <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
+      <mat-card-content class="!p-5">
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mx-auto mb-3">
+            <mat-icon class="text-amber-500">schedule</mat-icon>
+          </div>
+          <p class="text-2xl font-extrabold text-amber-600">{{ stats()?.pendingCount ?? '—' }}</p>
+          <p class="text-xs text-slate-500 font-medium mt-1">Pending</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Under Review -->
+    <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
+      <mat-card-content class="!p-5">
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center mx-auto mb-3">
+            <mat-icon class="text-blue-500">find_in_page</mat-icon>
+          </div>
+          <p class="text-2xl font-extrabold text-blue-600">{{ stats()?.underReviewCount ?? '—' }}</p>
+          <p class="text-xs text-slate-500 font-medium mt-1">Reviewing</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Approved -->
+    <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
+      <mat-card-content class="!p-5">
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center mx-auto mb-3">
+            <mat-icon class="text-green-500">check_circle</mat-icon>
+          </div>
+          <p class="text-2xl font-extrabold text-green-600">{{ stats()?.approvedCount ?? '—' }}</p>
+          <p class="text-xs text-slate-500 font-medium mt-1">Approved</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Rejected -->
+    <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
+      <mat-card-content class="!p-5">
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center mx-auto mb-3">
+            <mat-icon class="text-red-500">cancel</mat-icon>
+          </div>
+          <p class="text-2xl font-extrabold text-red-600">{{ stats()?.rejectedCount ?? '—' }}</p>
+          <p class="text-xs text-slate-500 font-medium mt-1">Rejected</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Recent Applications Table -->
+  <mat-card class="!rounded-2xl shadow-sm border border-slate-100">
+    <mat-card-header class="!p-6 !pb-0 flex items-center justify-between">
+      <mat-card-title class="!text-xl !font-bold !text-navy-900">Recent Applications</mat-card-title>
+      <a routerLink="/banker/applications" mat-button class="!text-gold-600 !font-medium">
+        View all <mat-icon class="!text-sm align-middle">arrow_forward</mat-icon>
+      </a>
+    </mat-card-header>
+
+    <mat-card-content class="!p-6">
+      <!-- Loading -->
+      <app-loading-skeleton *ngIf="loading()" [count]="5"></app-loading-skeleton>
+
+      <!-- Empty -->
+      <div *ngIf="!loading() && recentApplications().length === 0" class="text-center py-8">
+        <mat-icon class="text-slate-300 !text-5xl">inbox</mat-icon>
+        <p class="text-slate-500 mt-3">No applications yet</p>
+      </div>
+
+      <!-- Table -->
+      <table *ngIf="!loading() && recentApplications().length > 0"
+             mat-table [dataSource]="recentApplications()" class="w-full">
+
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Customer</th>
+          <td mat-cell *matCellDef="let app">
+            <div>
+              <p class="font-semibold text-navy-900 text-sm">{{ app.customerName }}</p>
+              <p class="text-xs text-slate-400">{{ app.customerEmail }}</p>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Type</th>
+          <td mat-cell *matCellDef="let app">
+            <span class="text-sm text-navy-800 font-medium">{{ app.type }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Amount</th>
+          <td mat-cell *matCellDef="let app">
+            <span class="font-bold text-navy-700">{{ formatCurrency(app.amount) }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Status</th>
+          <td mat-cell *matCellDef="let app">
+            <app-status-badge [status]="app.status"></app-status-badge>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef class="!font-semibold !text-slate-600">Applied</th>
+          <td mat-cell *matCellDef="let app" class="text-slate-500 text-sm">
+            {{ app.createdAt | date:'MMM d, y' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let app">
+            <a [routerLink]="['/banker/applications', app.id]" mat-icon-button matTooltip="Review">
+              <mat-icon class="text-slate-500">chevron_right</mat-icon>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-slate-50"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="hover:bg-slate-50 cursor-pointer transition-colors"
+            [routerLink]="['/banker/applications', row.id]"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,87 @@
+<nav class="navbar-container">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center gap-2 no-underline">
+        <div class="w-9 h-9 bg-gold rounded-lg flex items-center justify-center">
+          <span class="text-navy font-bold text-lg">B</span>
+        </div>
+        <span class="text-white font-bold text-xl tracking-tight">BankLoan <span class="text-gold">Pro</span></span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-4">
+        <!-- Customer Nav -->
+        <ng-container *ngIf="isLoggedIn && isCustomer">
+          <a routerLink="/customer/dashboard" routerLinkActive="nav-active"
+             class="nav-link" [routerLinkActiveOptions]="{exact: true}">Dashboard</a>
+          <a routerLink="/customer/applications" routerLinkActive="nav-active"
+             class="nav-link">My Applications</a>
+          <a routerLink="/customer/apply" routerLinkActive="nav-active"
+             class="nav-link">Apply for Loan</a>
+        </ng-container>
+
+        <!-- Banker Nav -->
+        <ng-container *ngIf="isLoggedIn && isBanker">
+          <a routerLink="/banker/dashboard" routerLinkActive="nav-active"
+             class="nav-link" [routerLinkActiveOptions]="{exact: true}">Dashboard</a>
+          <a routerLink="/banker/applications" routerLinkActive="nav-active"
+             class="nav-link">All Applications</a>
+        </ng-container>
+
+        <!-- Auth buttons -->
+        <ng-container *ngIf="!isLoggedIn">
+          <a routerLink="/login" mat-button class="!text-white">Sign In</a>
+          <a routerLink="/register" mat-raised-button class="!bg-gold !text-navy font-semibold">Get Started</a>
+        </ng-container>
+
+        <!-- User menu -->
+        <ng-container *ngIf="isLoggedIn">
+          <div class="flex items-center gap-3">
+            <div class="flex flex-col items-end">
+              <span class="text-white text-sm font-medium">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</span>
+              <span class="text-gold text-xs">{{ currentUser?.role }}</span>
+            </div>
+            <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-avatar">
+              <div class="w-9 h-9 rounded-full bg-gold flex items-center justify-center">
+                <span class="text-navy font-bold text-sm">{{ (currentUser?.firstName || 'U')[0] }}</span>
+              </div>
+            </button>
+            <mat-menu #userMenu="matMenu">
+              <button mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                <span>Sign Out</span>
+              </button>
+            </mat-menu>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button mat-icon-button class="md:hidden !text-white" (click)="toggleMobileMenu()">
+        <mat-icon>{{ mobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div *ngIf="mobileMenuOpen()" class="md:hidden border-t border-navy-700 py-3 px-4 space-y-2">
+    <ng-container *ngIf="!isLoggedIn">
+      <a routerLink="/login" class="mobile-nav-link" (click)="toggleMobileMenu()">Sign In</a>
+      <a routerLink="/register" class="mobile-nav-link text-gold" (click)="toggleMobileMenu()">Get Started</a>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn && isCustomer">
+      <a routerLink="/customer/dashboard" class="mobile-nav-link" (click)="toggleMobileMenu()">Dashboard</a>
+      <a routerLink="/customer/applications" class="mobile-nav-link" (click)="toggleMobileMenu()">My Applications</a>
+      <a routerLink="/customer/apply" class="mobile-nav-link" (click)="toggleMobileMenu()">Apply for Loan</a>
+      <button class="mobile-nav-link text-red-400 w-full text-left" (click)="logout()">Sign Out</button>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn && isBanker">
+      <a routerLink="/banker/dashboard" class="mobile-nav-link" (click)="toggleMobileMenu()">Dashboard</a>
+      <a routerLink="/banker/applications" class="mobile-nav-link" (click)="toggleMobileMenu()">All Applications</a>
+      <button class="mobile-nav-link text-red-400 w-full text-left" (click)="logout()">Sign Out</button>
+    </ng-container>
+  </div>
+</nav>
